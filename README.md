@@ -16,4 +16,8 @@ docker-compose up
 
 ```
 
-adadasdasd
+## open the http://localhost:5200/swagger/index.html
+and try the rabbit Action 
+in the Type string put any Value you want And you'll get Back the Entity that you Add in the DB.
+
+
