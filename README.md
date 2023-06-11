@@ -10,7 +10,7 @@ Learn more about using the dev container in its [readme](/.devcontainer/devconta
 
 You can run the Web sample by running these commands from the root folder (where the .sln file is located):
 
- **Please Replace the Stars in the Setings file with the connection string I'll send you by mail **
+ \**Please Replace the Stars in the Setings file with the connection string I'll send you by mail **\
  
   rabbitWorker .appsettings.json
   
