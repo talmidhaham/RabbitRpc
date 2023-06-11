@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  eshoppublicapi:
+    image: ${DOCKER_REGISTRY-}eshoppublicapi
+    build:
+      context: .
+      dockerfile: src/PublicApi/Dockerfile
+    depends_on:
+      - "rabbitmq"
+  eshoprabbitworker:
+    image: ${DOCKER_REGISTRY-}eshoprabbitworker
+    build:
+      context: .
+      dockerfile: src/RabbitWorker/Dockerfile
+    depends_on:
+      - "rabbitmq"
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+
