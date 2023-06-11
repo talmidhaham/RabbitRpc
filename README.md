@@ -10,6 +10,8 @@ Learn more about using the dev container in its [readme](/.devcontainer/devconta
 
 You can run the Web sample by running these commands from the root folder (where the .sln file is located):
 
+**Please Replace the Stars in the Setings file with the connection string I'll send you by mail **
+
 ```
 docker-compose build
 docker-compose up
@@ -19,5 +21,6 @@ docker-compose up
 ## open the http://localhost:5200/swagger/index.html
 and try the rabbit Action 
 in the Type string put any Value you want And you'll get Back the Entity that you Add in the DB.
+You Can access the DB with the Connection String That I'll send you by mail !!!!!
 
 
