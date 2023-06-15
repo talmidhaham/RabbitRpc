@@ -35,8 +35,8 @@ public static class Dependencies
                 c.UseSqlServer(configuration.GetConnectionString("CatalogConnection")));
 
             // Add Identity DbContext
-            services.AddDbContext<AppIdentityDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
+            //services.AddDbContext<AppIdentityDbContext>(options =>
+            //    options.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
 
             services.AddScoped<IRabbitClientFactory, RabbitClientFactory>();
             services.AddSingleton<IRabbitServerFactory, RabbitServerFactory>();

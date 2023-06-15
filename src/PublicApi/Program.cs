@@ -30,14 +30,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpoints();
 
 // Use to force loading of appsettings.json of test project
-builder.Configuration.AddConfigurationFile("appsettings.test.json");
+//builder.Configuration.AddConfigurationFile("appsettings.test.json");
 builder.Logging.AddConsole();
 
 Microsoft.eShopWeb.Infrastructure.Dependencies.ConfigureServices(builder.Configuration, builder.Services);
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-        .AddEntityFrameworkStores<AppIdentityDbContext>()
-        .AddDefaultTokenProviders();
+//builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+//        .AddEntityFrameworkStores<AppIdentityDbContext>()
+//        .AddDefaultTokenProviders();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
@@ -45,7 +45,7 @@ builder.Services.Configure<CatalogSettings>(builder.Configuration);
 var catalogSettings = builder.Configuration.Get<CatalogSettings>() ?? new CatalogSettings();
 builder.Services.AddSingleton<IUriComposer>(new UriComposer(catalogSettings));
 builder.Services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
-builder.Services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
+//builder.Services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
 
 //rabbit service oriented
 builder.Services.AddScoped<ICatalogService, CatalogService>();
@@ -141,10 +141,10 @@ using (var scope = app.Services.CreateScope())
         var catalogContext = scopedProvider.GetRequiredService<CatalogContext>();
         await CatalogContextSeed.SeedAsync(catalogContext, app.Logger);
 
-        var userManager = scopedProvider.GetRequiredService<UserManager<ApplicationUser>>();
-        var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        var identityContext = scopedProvider.GetRequiredService<AppIdentityDbContext>();
-        await AppIdentityDbContextSeed.SeedAsync(identityContext, userManager, roleManager);
+        //var userManager = scopedProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        //var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        //var identityContext = scopedProvider.GetRequiredService<AppIdentityDbContext>();
+        //await AppIdentityDbContextSeed.SeedAsync(identityContext, userManager, roleManager);
     }
     catch (Exception ex)
     {

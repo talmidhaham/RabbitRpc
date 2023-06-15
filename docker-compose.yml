@@ -7,6 +7,7 @@ services:
       context: .
       dockerfile: src/PublicApi/Dockerfile
     depends_on:
+      - "sqlserver"
       - "rabbitmq"
   eshoprabbitworker:
     image: ${DOCKER_REGISTRY-}eshoprabbitworker
@@ -15,6 +16,7 @@ services:
       dockerfile: src/RabbitWorker/Dockerfile
     depends_on:
       - "rabbitmq"
+      - "sqlserver"
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: 'rabbitmq'
@@ -24,4 +26,12 @@ services:
     volumes:
         - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql_server2022
+    ports:
+        - "1433:1433"
+    environment:
+        - SA_PASSWORD=@someThingComplicated1234
+        - ACCEPT_EULA=Y
 
