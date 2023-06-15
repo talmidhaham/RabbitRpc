@@ -21,13 +21,13 @@ public class CatalogContextSeed
                 catalogContext.Database.Migrate();
             }
 
-            if (!await catalogContext.CatalogBrands.AnyAsync())
-            {
-                await catalogContext.CatalogBrands.AddRangeAsync(
-                    GetPreconfiguredCatalogBrands());
+            //if (!await catalogContext.CatalogBrands.AnyAsync())
+            //{
+            //    await catalogContext.CatalogBrands.AddRangeAsync(
+            //        GetPreconfiguredCatalogBrands());
 
-                await catalogContext.SaveChangesAsync();
-            }
+            //    await catalogContext.SaveChangesAsync();
+            //}
 
             if (!await catalogContext.CatalogTypes.AnyAsync())
             {
@@ -37,13 +37,13 @@ public class CatalogContextSeed
                 await catalogContext.SaveChangesAsync();
             }
 
-            if (!await catalogContext.CatalogItems.AnyAsync())
-            {
-                await catalogContext.CatalogItems.AddRangeAsync(
-                    GetPreconfiguredItems());
+            //if (!await catalogContext.CatalogItems.AnyAsync())
+            //{
+            //    await catalogContext.CatalogItems.AddRangeAsync(
+            //        GetPreconfiguredItems());
 
-                await catalogContext.SaveChangesAsync();
-            }
+            //    await catalogContext.SaveChangesAsync();
+            //}
         }
         catch (Exception ex)
         {
