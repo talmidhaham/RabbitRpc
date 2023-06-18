@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.eShopWeb.ApplicationCore.Interfaces;
@@ -31,8 +32,16 @@ namespace Microsoft.eShopWeb.Infrastructure.Services;
 
         connection = factory.CreateConnection();
         channel = connection.CreateModel();
+        channel.QueueDeclare(queue: QUEUE_NAME, durable: false, exclusive: false, autoDelete: false, arguments: null);
+        channel.BasicQos(0, 1, false);
+
+
         // declare a server-named queue
         replyQueueName = channel.QueueDeclare().QueueName;
+
+
+
+
         var consumer = new EventingBasicConsumer(channel);
         consumer.Received += (model, ea) =>
         {
