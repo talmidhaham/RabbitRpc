@@ -66,7 +66,21 @@ public class Worker : BackgroundService
 
                 var message = Encoding.UTF8.GetString(body);
                 CatalogType CType = JsonConvert.DeserializeObject<CatalogType>(message);
-                var res = await _IRepository.AddAsync(new CatalogType(CType.Type));
+                CatalogType? res;
+                if (CType.Id == -1)
+                {
+                     res = await _IRepository.AddAsync(new CatalogType(CType.Type));
+                }
+                else
+                {
+                     res = await _IRepository.GetByIdAsync(CType.Id);
+                }
+
+                if (res == null)
+                {
+                    res = new CatalogType("Item Not Found ") { Id = -2};
+                }
+                
                 var json = JsonConvert.SerializeObject(res);
                 var ConvByte = Encoding.UTF8.GetBytes(json);
                 response = Encoding.UTF8.GetString(ConvByte);

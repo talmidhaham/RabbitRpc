@@ -25,4 +25,7 @@ public class CatalogService : ICatalogService
           return  await _IRabitMQRepository.SendMessage<CatalogType>(item);
 
     }
+
+
+
 }

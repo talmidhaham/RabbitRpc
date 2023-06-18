@@ -4,6 +4,7 @@ using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.eShopWeb.ApplicationCore.Entities;
 using Microsoft.eShopWeb.PublicApi.Interfaces;
+using Newtonsoft.Json.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,16 +26,27 @@ public class RabbitController : ControllerBase
     //    return new string[] { "value1", "value2" };
     //}
 
-    //// GET api/<ValuesController>/5
-    //[HttpGet("{id}")]
-    //public string Get(int id)
-    //{
-    //    return "value";
-    //}
+    // GET api/<ValuesController>/5
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id)
+    {
+        int timeout = 5000;
+        CatalogType ct = new CatalogType("") { Id = id};
+        var task = _ICatalogService.SaveItemAsync(ct);
+        if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
+        {
+            // task completed within timeout
+            return Ok(await task);
+        }
+        else
+        {
+            return StatusCode(Microsoft.AspNetCore.Http.StatusCodes.Status408RequestTimeout, "timeout");
+        }
+    }
 
     // POST api/<ValuesController>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] CatalogType value)
+    public async Task<IActionResult> Post([FromBody] CatalogTypeDto value)
     {
 
        //var rpcResult = await _ICatalogService.SaveItemAsync(value);
@@ -45,7 +57,8 @@ public class RabbitController : ControllerBase
 
 
         int timeout = 5000;
-        var task = _ICatalogService.SaveItemAsync(value);
+        CatalogType ct = new CatalogType(value.Name) { Id = -1 };
+        var task = _ICatalogService.SaveItemAsync(ct);
         if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
         {
             // task completed within timeout
