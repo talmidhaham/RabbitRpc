@@ -32,8 +32,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Services;
 
         connection = factory.CreateConnection();
         channel = connection.CreateModel();
-        channel.QueueDeclare(queue: QUEUE_NAME, durable: false, exclusive: false, autoDelete: false, arguments: null);
-        channel.BasicQos(0, 1, false);
+
 
 
         // declare a server-named queue
